@@ -92,15 +92,44 @@ public class GarageImpl implements Garage {
 
 	@Override
 	public Car[] findCarsByEngine(double min, double max) {
-		// TODO Auto-generated method stub
-		return null;
+		StringBuilder res = new StringBuilder();
+		for (int i = 0; i < size; i++) {
+			if (cars[i].getEngine() >= min && cars[i].getEngine() <= max) {
+				res.append(i).append(DELIMETER);
+
+			}
+		}
+		String[] arr = res.toString().split(DELIMETER);
+		Car[] matchCars = new Car[arr.length];
+		for (int i = 0; i < arr.length; i++) {
+			int index = Integer.parseInt(arr[i]);
+			matchCars[i] = cars[index];
+
+		}
+		return matchCars;
+		
+
 	}
 
 	@Override
 	public Car[] findCarsByColor(String color) {
-		// TODO Auto-generated method stub
-		return null;
+		StringBuilder res = new StringBuilder();
+		for (int i = 0; i < size; i++) {
+			if (cars[i].getColor() == color) {
+				res.append(i).append(DELIMETER);
+
+			}
+		}
+		String[] arr = res.toString().split(DELIMETER);
+		Car[] matchCars = new Car[arr.length];
+		for (int i = 0; i < arr.length; i++) {
+			int index = Integer.parseInt(arr[i]);
+			matchCars[i] = cars[index];
+
+		}
+		return matchCars;
 	}
+	
 
 	@Override
 	public int size() {

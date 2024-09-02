@@ -66,21 +66,24 @@ class GarageTest {
 
 	@Test
 	void testFindCarsByCompany() {
-		Car[] car = { cars[2] };
-		assertArrayEquals(car, garage.findCarsByCompany("Honda"));
+		Car[] expected = { cars[2] };
+		assertArrayEquals(expected, garage.findCarsByCompany("Honda"));
 		assertNotNull(garage.findCarsByCompany("Audi"));
 	}
 
 	@Test
 	void testFindCarsByEngine() {
-		Car[] car = { cars[6] };
-		assertArrayEquals(car, garage.findCarsByEngine(1.4, 1.6));
-		assertNotNull(garage.findCarsByCompany("Audi"));
+		Car[] actual = garage.findCarsByEngine(1.8, 2.2);
+		Car[] expected = { cars[1], cars[2], cars[5], cars[7] };
+		assertArrayEquals(expected, actual);
 	}
 
 	@Test
 	void testFindCarsByColor() {
-		fail("Not yet implemented");
+		Car[] actual = garage.findCarsByColor("Black");
+		Car[] expected = { cars[0], cars[8]};
+		assertArrayEquals(expected, actual);
+		assertNotNull(garage.findCarsByColor("Silver"));
 	}
 
 }
