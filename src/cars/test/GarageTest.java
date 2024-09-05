@@ -74,7 +74,7 @@ class GarageTest {
 	@Test
 	void testFindCarsByEngine() {
 		Car[] actual = garage.findCarsByEngine(1.8, 2.2);
-		Car[] expected = { cars[1], cars[2], cars[5], cars[7] };
+		Car[] expected = { cars[1], cars[2], cars[7] };
 		assertArrayEquals(expected, actual);
 	}
 

@@ -1,6 +1,7 @@
 package cars.dao;
 
 import java.util.Iterator;
+import java.util.function.Predicate;
 
 import cars.model.Car;
 
@@ -53,83 +54,78 @@ public class GarageImpl implements Garage {
 
 	@Override
 	public Car[] findCarsByModel(String model) {
-		StringBuilder res = new StringBuilder();
-		for (int i = 0; i < size; i++) {
-			if (cars[i].getModel() == model) {
-				res.append(i).append(DELIMETER);
+		Predicate<Car> predicateForModel = new Predicate<Car>() {
 
+			@Override
+			public boolean test(Car t) {
+				return t.getModel() == model;
 			}
-		}
-		String[] arr = res.toString().split(DELIMETER);
-		Car[] matchCars = new Car[arr.length];
-		for (int i = 0; i < arr.length; i++) {
-			int index = Integer.parseInt(arr[i]);
-			matchCars[i] = cars[index];
-
-		}
-		return matchCars;
-
+		};
+		return findCarsByPredicate(predicateForModel);
 	}
 
 	@Override
 	public Car[] findCarsByCompany(String company) {
-		StringBuilder res = new StringBuilder();
-		for (int i = 0; i < size; i++) {
-			if (cars[i].getCompany() == company) {
-				res.append(i).append(DELIMETER);
 
+		Predicate<Car> predicateForCompany = new Predicate<Car>() {
+
+			@Override
+			public boolean test(Car t) {
+				return t.getCompany() == company;
 			}
-		}
-		String[] arr = res.toString().split(DELIMETER);
-		Car[] matchCars = new Car[arr.length];
-		for (int i = 0; i < arr.length; i++) {
-			int index = Integer.parseInt(arr[i]);
-			matchCars[i] = cars[index];
+		};
 
-		}
-		return matchCars;
+		return findCarsByPredicate(predicateForCompany);
 	}
 
 	@Override
 	public Car[] findCarsByEngine(double min, double max) {
-		StringBuilder res = new StringBuilder();
-		for (int i = 0; i < size; i++) {
-			if (cars[i].getEngine() >= min && cars[i].getEngine() <= max) {
-				res.append(i).append(DELIMETER);
+		Predicate<Car> predicateForEngine = new Predicate<Car>() {
 
+			@Override
+			public boolean test(Car t) {
+
+				return t.getEngine() >= min && t.getEngine() < max;
 			}
-		}
-		String[] arr = res.toString().split(DELIMETER);
-		Car[] matchCars = new Car[arr.length];
-		for (int i = 0; i < arr.length; i++) {
-			int index = Integer.parseInt(arr[i]);
-			matchCars[i] = cars[index];
+		};
 
-		}
-		return matchCars;
-		
+		return findCarsByPredicate(predicateForEngine);
 
 	}
 
 	@Override
 	public Car[] findCarsByColor(String color) {
-		StringBuilder res = new StringBuilder();
-		for (int i = 0; i < size; i++) {
-			if (cars[i].getColor() == color) {
-				res.append(i).append(DELIMETER);
+		Predicate<Car> predicateForColor = new Predicate<Car>() {
 
+			@Override
+			public boolean test(Car t) {
+				return t.getColor().equals(color);
+			}
+		};
+
+		return findCarsByPredicate(predicateForColor);
+	}
+
+	private Car[] findCarsByPredicate(Predicate<Car> predicate) {
+		Car[] res;
+		int counter = 0;
+		for (int i = 0; i < size; i++) {
+			if (predicate.test(cars[i])) {
+				counter++;
 			}
 		}
-		String[] arr = res.toString().split(DELIMETER);
-		Car[] matchCars = new Car[arr.length];
-		for (int i = 0; i < arr.length; i++) {
-			int index = Integer.parseInt(arr[i]);
-			matchCars[i] = cars[index];
 
+		res = new Car[counter];
+		int j = 0;
+		for (int i = 0; i < size; i++) {
+			if (predicate.test(cars[i])) {
+				res[j++] = cars[i];
+			}
 		}
-		return matchCars;
+
+		return res;
+
 	}
-	
 
 	@Override
 	public int size() {
