@@ -13,7 +13,7 @@ public class GarageImpl implements Garage {
 	public GarageImpl(int capacity) {
 		cars = new Car[capacity];
 	}
-
+//O(n)
 	@Override
 	public boolean addCar(Car car) {
 		if (car == null || size == cars.length || findCarByRegNumber(car.getRegNumber()) != null) {
@@ -24,7 +24,7 @@ public class GarageImpl implements Garage {
 		size++;
 		return true;
 	}
-
+//O(n)
 	@Override
 	public Car removeCar(String regNumber) {
 		for (int i = 0; i < size; i++) {
@@ -40,7 +40,7 @@ public class GarageImpl implements Garage {
 		}
 		return null;
 	}
-
+//O(n)
 	@Override
 	public Car findCarByRegNumber(String regNumber) {
 		for (int i = 0; i < size; i++) {
@@ -51,7 +51,7 @@ public class GarageImpl implements Garage {
 		}
 		return null;
 	}
-
+//O(n)
 	@Override
 	public Car[] findCarsByModel(String model) {
 		Predicate<Car> predicateForModel = new Predicate<Car>() {
@@ -63,7 +63,7 @@ public class GarageImpl implements Garage {
 		};
 		return findCarsByPredicate(predicateForModel);
 	}
-
+	//O(n)
 	@Override
 	public Car[] findCarsByCompany(String company) {
 
@@ -77,7 +77,7 @@ public class GarageImpl implements Garage {
 
 		return findCarsByPredicate(predicateForCompany);
 	}
-
+	//O(n)
 	@Override
 	public Car[] findCarsByEngine(double min, double max) {
 		Predicate<Car> predicateForEngine = new Predicate<Car>() {
@@ -92,7 +92,7 @@ public class GarageImpl implements Garage {
 		return findCarsByPredicate(predicateForEngine);
 
 	}
-
+	//O(n)
 	@Override
 	public Car[] findCarsByColor(String color) {
 		Predicate<Car> predicateForColor = new Predicate<Car>() {
@@ -105,7 +105,7 @@ public class GarageImpl implements Garage {
 
 		return findCarsByPredicate(predicateForColor);
 	}
-
+	//O(n)
 	private Car[] findCarsByPredicate(Predicate<Car> predicate) {
 		Car[] res;
 		int counter = 0;
@@ -126,7 +126,7 @@ public class GarageImpl implements Garage {
 		return res;
 
 	}
-
+//O(1)
 	@Override
 	public int size() {
 		return size;
