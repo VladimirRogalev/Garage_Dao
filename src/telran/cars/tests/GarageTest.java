@@ -2,15 +2,15 @@ package telran.cars.tests;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-
 import java.util.Arrays;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import telran.cars.dao.Garage;
-
-
+import telran.cars.dao.GarageImpl;
+import telran.cars.dao.GarageStreamImpl;
+import telran.cars.dao.GarageStreamListImpl;
 import telran.cars.dao.GarageTreeSetImpl;
 import telran.cars.model.Car;
 
@@ -20,22 +20,27 @@ public class GarageTest {
 
 	@BeforeEach
 	public void setUp() throws Exception {
-		
-		cars = new Car[] {new Car("Number1", "Model1", "Company1", 1.5, "Red"),
+
+		garage = new GarageStreamListImpl(5); // 
+		cars = new Car[4];
+		cars = new Car[] { new Car("Number1", "Model1", "Company1", 1.5, "Red"),
 				new Car("Number2", "Model2", "Company1", 2.5, "Green"),
-				new Car("Number3", "Model3", "Company2", 1.5, "Red"), 
-				 new Car("Number4", "Model4", "Company2", 2.0, "Green")	};
-				 garage = new GarageTreeSetImpl(Arrays.asList(cars));
+				new Car("Number3", "Model3", "Company2", 1.5, "Red"),
+				new Car("Number4", "Model4", "Company2", 2.0, "Green") };
+		for (int i = 0; i < cars.length; i++) {
+			garage.addCar(cars[i]);
+		}
+//		 garage = new GarageStreamListImpl(Arrays.asList(cars)); // for treeset
 	}
 
 	@Test
 	public void testAddCar() {
-		 assertFalse(garage.addCar(cars[0]));  
-		    Car car = new Car("Number5", "Model4", "Company2", 2.0, "Green");
-		    assertTrue(garage.addCar(car));
-		    Car duplicate = new Car("Number5", "AnotherModel", "AnotherCompany", 3.0, "Blue");
-		    assertFalse(garage.addCar(duplicate)); 
-		}
+		assertFalse(garage.addCar(cars[0]));
+		Car car = new Car("Number5", "Model4", "Company2", 2.0, "Green");
+		assertTrue(garage.addCar(car));
+		Car duplicate = new Car("Number5", "AnotherModel", "AnotherCompany", 3.0, "Blue");
+		assertFalse(garage.addCar(duplicate));
+	}
 
 	@Test
 	public void testRemoveCar() {
